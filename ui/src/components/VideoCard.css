@@ -1,0 +1,28 @@
+.viewCount{
+    padding: 2px 4px;
+    font-size: smaller;
+    border-radius: 3px;
+    color: whitesmoke;
+    align-items: center;
+    gap: 4px;
+    background-color: rgba(49, 53, 59, 0.516);
+    font-weight: lighter;
+    display: flex;
+    width: 30%;
+}
+
+.product-name{
+    font-size: medium;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    color: white;   
+}
+
+.store-name{
+    font-size: small;
+    font-weight: lighter;
+    margin: 0;
+    padding: 0;
+    color: white;
+}
