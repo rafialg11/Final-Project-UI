@@ -1,5 +1,14 @@
-import { Grid, GridItem } from "@chakra-ui/react";
+import {
+  Grid,
+  GridItem,
+  Box,
+  Textarea,
+  Button,
+  IconButton,
+} from "@chakra-ui/react";
 import ProductCard from "../../components/ProductCard";
+import { ArrowBackIcon } from "@chakra-ui/icons";
+import Comment from "../../components/Comment";
 import "./VideoDetails.css";
 
 const VideoDetails = () => {
@@ -14,12 +23,14 @@ const VideoDetails = () => {
           <ProductCard />
           <ProductCard />
         </GridItem>
-        <GridItem
-          colSpan={7}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
+        <GridItem colSpan={7} justifyContent="center" alignItems="center">
+          <Box mb={10} mt={5} ml={2}>
+            <IconButton
+              icon={<ArrowBackIcon />}
+              aria-label="Kembali"
+              colorScheme="white"
+            />
+          </Box>
           <iframe
             width={"100%"}
             height={"80%"}
@@ -29,13 +40,25 @@ const VideoDetails = () => {
             allowfullscreen
           ></iframe>
         </GridItem>
-        <GridItem colSpan={3} bg="gray.400" p={2} overflowY="auto">
-          <Grid templateRows="90% 10%" h="100%">
-            <GridItem bg="purple" p={2} overflowY="auto">
-              All Comments (Scrollable)
+        <GridItem colSpan={3} p={2} overflowY="auto">
+          <Grid templateRows="77% 23%" h="100%">
+            <GridItem p={2} overflowY="auto">
+              <Comment />
+              <Comment />
             </GridItem>
-            <GridItem bg="yellow" p={2}>
-              Input Comment (Sticky)
+            <GridItem p={2}>
+              <Box p={4} borderWidth="1px" borderRadius="md">
+                <Textarea
+                  placeholder="Tulis komentar Anda di sini..."
+                  size="md"
+                  resize="vertical"
+                  mb={2}
+                  color="whitesmoke"
+                />
+                <Button color="whitesmoke" bgColor="#3CCF4E">
+                  Kirim Komentar
+                </Button>
+              </Box>{" "}
             </GridItem>
           </Grid>
         </GridItem>
