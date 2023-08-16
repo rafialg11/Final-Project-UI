@@ -5,6 +5,7 @@ import {
   Textarea,
   Button,
   IconButton,
+  Input,
 } from "@chakra-ui/react";
 import ProductCard from "../../components/ProductCard";
 import { ArrowBackIcon } from "@chakra-ui/icons";
@@ -41,13 +42,19 @@ const VideoDetails = () => {
           ></iframe>
         </GridItem>
         <GridItem colSpan={3} p={2} overflowY="auto">
-          <Grid templateRows="77% 23%" h="100%">
+          <Grid templateRows="70% 30%" h="100%">
             <GridItem p={2} overflowY="auto">
               <Comment />
               <Comment />
             </GridItem>
             <GridItem p={2}>
               <Box p={4} borderWidth="1px" borderRadius="md">
+                <Input
+                  placeholder="Masukkan username Anda..."
+                  size="md"
+                  mb={2}
+                  color="whitesmoke"
+                />
                 <Textarea
                   placeholder="Tulis komentar Anda di sini..."
                   size="md"
@@ -58,7 +65,7 @@ const VideoDetails = () => {
                 <Button color="whitesmoke" bgColor="#3CCF4E">
                   Kirim Komentar
                 </Button>
-              </Box>{" "}
+              </Box>
             </GridItem>
           </Grid>
         </GridItem>
