@@ -1,4 +1,7 @@
+import React, { useState, useEffect } from "react";
 import VideoCard from "../../components/VideoCard";
+import axios from "axios";
+
 import {
   SimpleGrid,
   Grid,
@@ -16,6 +19,20 @@ import { Search2Icon } from "@chakra-ui/icons";
 import "./Home.css";
 import logo from "../../../src/assets/images/tokplay.png";
 const Home = () => {
+  const [videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    // Panggil API dan simpan datanya ke dalam state "videos"
+    axios
+      .get("https://tpplaybackend-production.up.railway.app/api/videos")
+      .then((response) => {
+        setVideos(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   return (
     <div className="Home">
       <Grid templateRows="1fr" p={2}>
@@ -70,22 +87,15 @@ const Home = () => {
         <GridItem p={4}>
           <SimpleGrid
             spacing={4}
-            templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
+            templateColumns="repeat(auto-fill, minmax(220px, 1fr))"
           >
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
-            <VideoCard />
+            <VideoCard
+              key={video.id}
+              urlImageThumbnail={video.thumbnailUrl}
+              videoTitle={video.title}
+              videoOwner={video.owner}
+              videoViews={video.views}
+            />
           </SimpleGrid>
         </GridItem>
       </Grid>

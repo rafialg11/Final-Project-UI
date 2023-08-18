@@ -9,12 +9,17 @@ import {
 import { AiOutlineEye } from "react-icons/ai";
 import "./VideoCard.css";
 
-const VideoCard = () => {
-  //   const { name, description, price, image } = product;
+const VideoCard = ({
+  urlImageThumbnail,
+  videoTitle,
+  videoOwner,
+  videoViews,
+}) => {
+  const { urlImageThumbnail, videoTitle, videoOwner, videoViews } = props;
   return (
     <Card
       height={350}
-      backgroundImage="https://i.pinimg.com/236x/54/d2/dd/54d2dd16d05f53e376be05992742c7a4.jpg"
+      backgroundImage={urlImageThumbnail}
       backgroundSize="cover"
     >
       <CardHeader>
@@ -23,7 +28,7 @@ const VideoCard = () => {
             <div></div>
             <div className="viewCount">
               <AiOutlineEye />
-              <span>122</span>
+              <span>{videoViews}</span>
             </div>
           </div>
         </Heading>
@@ -32,10 +37,10 @@ const VideoCard = () => {
       <CardFooter bgGradient="linear(to-t, rgba(30, 30, 30, 0.9), rgba(204, 204, 204, 0))">
         <VStack spacing={1} align="stretch">
           <div className="product-name">
-            <h1>Sepatu Murah Meriah edisi HUT Indo ke 45</h1>
+            <h1>{videoTitle}</h1>
           </div>
           <div className="store-name">
-            <h1>Ventella</h1>
+            <h1>{videoOwner}</h1>
           </div>
         </VStack>
       </CardFooter>
