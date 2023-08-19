@@ -1,70 +1,127 @@
-# Getting Started with Create React App
+# Tokopedia Play Clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The TokoPlay Clone is a dynamic platform designed to replicate the essence of Tokopedia Play, offering a unique blend of video content and e-commerce integration. It allows users to explore a curated selection of embedded YouTube videos, each complemented by related products. Additionally, users can engage with the content by posting comments on their chosen videos.
+You can access the website by clicking this link: https://final-project-ui-cyan.vercel.app/
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Feature 1: User can open two pages:
+  - Home (/)
+  - Video Detail (/video/:id)
+- Feature 2: User can see a video list with thumbnail in home page.
+- Feature 3: User can click each video and go to video detail page.
+- Feature 4: User can see list products, embed YouTube, list comment, and form submit comment.
+- Feature 5: User just need input name and comment when submit comment in form.
+- Feature 6: User can see their comment in list comment section after success submit comment.
 
-### `npm start`
+### Additional Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Additional Feature 1: Search Feature, easily find specific videos or products through a robust search.
+- Additional Feature 2: The user will be redirected to the product page on Tokopedia when clicking on a product.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How to Install & Run
 
-### `npm test`
+Here are the steps to install and run the project in your local environment.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clone the Repository**:
 
-### `npm run build`
+    ```bash
+    git clone https://github.com/rafialg11/Final-Project-UI.git
+    cd Final-Project-UI
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Install Dependencies**:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    ```bash
+    npm install
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   or
 
-### `npm run eject`
+    ```bash
+    yarn install
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. **Run the Application**:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    ```bash
+    npm start
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   or
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    ```bash
+    yarn start
+    ```
 
-## Learn More
+5. **Access the Application**:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    Access the application in your browser at `http://localhost:3000`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Database Schema
 
-### Code Splitting
+### Videos Collection
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The `videos` collection is designed to store information about the videos featured on the platform. Each document in this collection includes the following fields:
 
-### Analyzing the Bundle Size
+- `urlImgThumbnail`: URL of the video thumbnail image.
+- `videoUrl`: Embedded YouTube video URL.
+- `videoTitle`: Title of the video.
+- `videoOwner`: Name of the video owner.
+- `videoViews`: Number of video views.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Example Document:**
 
-### Making a Progressive Web App
+```json
+{
+  "urlImgThumbnail": "https://i.pinimg.com/564x/4c/9a/b8/4c9ab8c37b93ef118defe2b2616a2ba8.jpg",
+  "videoUrl": "https://www.youtube.com/embed/X5EXTKMnDuA",
+  "videoTitle": "Diskon Sepatu Edisi HUT RI",
+  "videoOwner": "Pentella",
+  "videoViews": 1
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Products Collection
 
-### Advanced Configuration
+The `products` collection is utilized to store information about products associated with the videos on the platform. Each document in this collection contains these fields:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- `title`: Product title.
+- `productUrl`: E-commerce product URL.
+- `productImg`: Product image URL.
+- `storeName`: Store or seller name.
+- `price`: Product price.
+- `videoId`: ID of the video associated with this product.
 
-### Deployment
+**Example Document:**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```json
+{
+  "title": "Sepatu Casual",
+  "productUrl": "https://www.tokopedia.com/footstepfootwear/footstep-footwear-sepatu-loafers-pria-casual-patra-boat-shoes-boat-39",
+  "productImg": "https://images.tokopedia.net/img/cache/900/VqbcmM/2022/8/22/a2b86d0e-99c1-4e65-95b2-b6e80c5f90b6.jpg",
+  "storeName": "Pentella",
+  "price": "325000",
+  "videoId": "64df1c887d5a29001cd13069"
+}
+```
 
-### `npm run build` fails to minify
+### Comments Collection
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The `comments` collection is used to store comments left by users on the platform's videos. Each document in this collection consists of these fields:
+
+- `username`: Name of the user who left the comment.
+- `comment`: Comment content.
+- `timestamp`: Time when the comment was made.
+- `videoId`: ID of the video to which this comment is related.
+
+**Example Document:**
+
+```json
+{
+  "username": "Rafi",
+  "comment": "Sepatu nya murah dan bagus",
+  "timestamp": "2023-08-19T09:44:31.880Z",
+  "videoId": "64df1c887d5a29001cd13069",
+}
+```
