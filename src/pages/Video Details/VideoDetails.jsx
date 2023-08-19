@@ -15,11 +15,16 @@ import Comment from "../../components/Comment";
 import "./VideoDetails.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { format } from "date-fns";
+import useCommentForm from "../../hooks/useCommentForm";
+import useComments from "../../hooks/useComment";
 
 const VideoDetails = () => {
   const { videoId } = useParams();
   const [videoUrl, setVideoUrl] = useState("");
   const [products, setProducts] = useState([]);
+  const commentForm = useCommentForm();
+  const { comments } = useComments(videoId);
 
   useEffect(() => {
     // Panggil API dan simpan datanya ke dalam state "videos"
@@ -45,6 +50,11 @@ const VideoDetails = () => {
         console.error("Error fetching data:", error);
       });
   }, [videoId]);
+
+  const handleSubmitComment = (e) => {
+    e.preventDefault();
+    commentForm.postComment(videoId);
+  };
 
   return (
     <div className="VideoDetails">
@@ -83,28 +93,56 @@ const VideoDetails = () => {
         <GridItem colSpan={3} p={2} overflowY="auto">
           <Grid templateRows="70% 30%" h="100%">
             <GridItem p={2} overflowY="auto">
-              <Comment />
-              <Comment />
+              {comments.map((comment) => (
+                <Comment
+                  key={comment._id}
+                  username={comment.username}
+                  comment={comment.comment}
+                  timestamp={format(
+                    new Date(comment.timestamp),
+                    "dd MMM yyyy HH:mm:ss"
+                  )}
+                />
+              ))}
             </GridItem>
             <GridItem p={2}>
-              <Box p={4} borderWidth="1px" borderRadius="md">
-                <Input
-                  placeholder="Masukkan username Anda..."
-                  size="md"
-                  mb={2}
-                  color="whitesmoke"
-                />
-                <Textarea
-                  placeholder="Tulis komentar Anda di sini..."
-                  size="md"
-                  resize="vertical"
-                  mb={2}
-                  color="whitesmoke"
-                />
-                <Button color="whitesmoke" bgColor="#3CCF4E">
-                  Kirim Komentar
-                </Button>
-              </Box>
+              <form onSubmit={handleSubmitComment}>
+                <Box p={4} borderWidth="1px" borderRadius="md">
+                  <Input
+                    placeholder="Masukkan username Anda..."
+                    size="md"
+                    mb={2}
+                    color="whitesmoke"
+                    value={commentForm.formData.username}
+                    onChange={(e) =>
+                      commentForm.setFormData({
+                        ...commentForm.formData,
+                        username: e.target.value,
+                      })
+                    }
+                  />
+                  <Textarea
+                    placeholder="Tulis komentar Anda di sini..."
+                    size="md"
+                    resize="vertical"
+                    mb={2}
+                    color="whitesmoke"
+                    value={commentForm.formData.comment}
+                    onChange={(e) =>
+                      commentForm.setFormData({
+                        ...commentForm.formData,
+                        comment: e.target.value,
+                      })
+                    }
+                  />
+                  <Button type="submit" color="whitesmoke" bgColor="#3CCF4E">
+                    Kirim Komentar
+                  </Button>
+                </Box>
+                {commentForm.error && (
+                  <div>Error: {commentForm.error.message}</div>
+                )}
+              </form>
             </GridItem>
           </Grid>
         </GridItem>

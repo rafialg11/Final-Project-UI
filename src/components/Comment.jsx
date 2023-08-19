@@ -1,6 +1,6 @@
 import { Avatar, Box, Divider, Flex, Text } from "@chakra-ui/react";
 
-const Comment = () => {
+const Comment = ({ username, comment, timestamp }) => {
   return (
     <Box
       p={4}
@@ -14,19 +14,14 @@ const Comment = () => {
       <Flex align="center" mb={2}>
         <Avatar size="sm" name="rafi" mr={2} />
         <Text color="whitesmoke" fontWeight="semibold">
-          Rafi
+          {username}
         </Text>
       </Flex>
       <Text fontSize="sm" color="gray.300" mb={1}>
-        17/08/2023
+        {timestamp}
       </Text>
       <Divider mb={2} />
-      <Text color="whitesmoke">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam nam ex
-        perspiciatis, facilis tempora aliquam voluptate eius alias itaque
-        quaerat. Praesentium laboriosam nulla corporis, nesciunt fuga cupiditate
-        adipisci repellendus facere?
-      </Text>
+      <Text color="whitesmoke">{comment}</Text>
     </Box>
   );
 };
