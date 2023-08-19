@@ -20,6 +20,7 @@ import "./Home.css";
 import logo from "../../../src/assets/images/tokplay.png";
 const Home = () => {
   const [videos, setVideos] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   useEffect(() => {
     // Panggil API dan simpan datanya ke dalam state "videos"
@@ -33,9 +34,35 @@ const Home = () => {
       });
   }, []);
 
+  const handleSearchChange = (event) => {
+    const newSearchKeyword = event.target.value;
+    setSearchKeyword(newSearchKeyword);
+
+    // Jika input kosong, tampilkan semua video lagi
+    if (newSearchKeyword === "") {
+      axios
+        .get("https://tpplaybackend-production.up.railway.app/api/videos")
+        .then((response) => {
+          setVideos(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  };
+
+  const handleSearchClick = () => {
+    if (searchKeyword !== "") {
+      const filteredVideos = videos.filter((video) =>
+        video.videoTitle.toLowerCase().includes(searchKeyword.toLowerCase())
+      );
+      setVideos(filteredVideos);
+    }
+  };
+
   return (
     <div className="Home">
-      <Grid templateRows="1fr" p={2}>
+      <Grid templateRows="1fr" p={2} bg="dark.100">
         {/* Navigasi (nav) */}
         <GridItem
           pl={2}
@@ -66,6 +93,8 @@ const Home = () => {
                   placeholder="Cari video yang mau ditonton"
                   color="whitesmoke"
                   border="1px solid #3CCF4E"
+                  value={searchKeyword}
+                  onChange={handleSearchChange}
                 />
                 <InputRightAddon p={0} border="none">
                   <Button
@@ -74,6 +103,7 @@ const Home = () => {
                     borderRightRadius={3.3}
                     border="1px solid #3CCF4E"
                     bgColor="#3CCF4E"
+                    onClick={handleSearchClick}
                   >
                     Cari
                   </Button>
@@ -89,13 +119,16 @@ const Home = () => {
             spacing={4}
             templateColumns="repeat(auto-fill, minmax(220px, 1fr))"
           >
-            <VideoCard
-              key={video.id}
-              urlImageThumbnail={video.thumbnailUrl}
-              videoTitle={video.title}
-              videoOwner={video.owner}
-              videoViews={video.views}
-            />
+            {videos.map((video) => (
+              <VideoCard
+                key={video._id}
+                videoId={video._id}
+                urlImageThumbnail={video.urlImgThumbnail}
+                videoTitle={video.videoTitle}
+                videoOwner={video.videoOwner}
+                videoViews={video.videoViews}
+              />
+            ))}
           </SimpleGrid>
         </GridItem>
       </Grid>

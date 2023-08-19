@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Grid,
   GridItem,
@@ -11,31 +13,68 @@ import ProductCard from "../../components/ProductCard";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import Comment from "../../components/Comment";
 import "./VideoDetails.css";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const VideoDetails = () => {
+  const { videoId } = useParams();
+  const [videoUrl, setVideoUrl] = useState("");
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Panggil API dan simpan datanya ke dalam state "videos"
+    axios
+      .get(
+        `https://tpplaybackend-production.up.railway.app/api/videos/${videoId}`
+      )
+      .then((response) => {
+        const videoUrl = response.data.videoUrl;
+        setVideoUrl(videoUrl);
+        axios
+          .get(
+            `https://tpplaybackend-production.up.railway.app/api/products/${videoId}`
+          )
+          .then((productResponse) => {
+            setProducts(productResponse.data);
+          })
+          .catch((productError) => {
+            console.error("Error fetching product data:", productError);
+          });
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [videoId]);
+
   return (
     <div className="VideoDetails">
       <Grid p="2" templateColumns="repeat(12, 1fr)" h="100vh" gap={2}>
-        <GridItem colSpan={2} p={2} overflowY="auto">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+        <GridItem colSpan={2} p={4} overflowY="auto">
+          {products.map((product) => (
+            <ProductCard
+              key={product._id}
+              title={product.title}
+              storeName={product.storeName}
+              price={product.price}
+              productImg={product.productImg}
+              productUrl={product.productUrl}
+            />
+          ))}
         </GridItem>
         <GridItem colSpan={7} justifyContent="center" alignItems="center">
-          <Box mb={10} mt={5} ml={2}>
-            <IconButton
-              icon={<ArrowBackIcon />}
-              aria-label="Kembali"
-              colorScheme="white"
-            />
-          </Box>
+          <Link to={`/`} style={{ textDecoration: "none" }}>
+            <Box mb={10} mt={5} ml={2}>
+              <IconButton
+                icon={<ArrowBackIcon />}
+                aria-label="Kembali"
+                colorScheme="white"
+              />
+            </Box>
+          </Link>
           <iframe
             width={"100%"}
             height={"80%"}
-            src="https://www.youtube.com/embed/X5EXTKMnDuA"
+            src={videoUrl}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
